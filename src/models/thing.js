@@ -1,38 +1,47 @@
 const mongoose = require('../database/index');
 
-const listSchema = new mongoose.Schema([{
-    name: {                         //Name of thing
+const thingSchema = new mongoose.Schema([{
+
+    name: {
         type: String,
         require: true
     },
-    description: {                  //Description what this do or what is it
+
+    description: {
         type: String,
         require: true
     },
-    type: {                         //If is an task, link or other thing that you wanna remember later
+
+    type: {
         type: String,
         require: true
     },
-    referenceLink: {                //Reference link of thing
+
+    referenceLink: {
         type: String
     },
-    Tags: [{                        //Tags for found this
-        type: String
+
+    Tags: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tags'
     }],
+
     Status: {                       //ver, rever, ja visto, ha algo interessante / see, review, already seen, something interesting
         type: String,
         require: true
     },
+
     createAt: {
         type: Date,
         default: Date.now
     },
+
     updatedAt: {
         type: Date,
         default: Date.now
     }
 }]);
 
-const List = mongoose.model('List', listSchema);
+const Things = mongoose.model('Things', thingSchema);
 
-module.exports = List;
+module.exports = Things;
