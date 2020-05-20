@@ -1,115 +1,56 @@
-const Thing = require('../models/thing')
+const Thing = require('../Factory/Database/Thing')
+const Tag = require('../Factory/Database/Tag')
 
 module.exports = {
 
     async createThing(req, res) {
-        try {
-            const { thing } = req.body
-            const createdThing = await Thing.create(thing)
+        const createdThing = await Thing.createThingInDB(req.body)
 
-            return res.send({ CreatedThing: createdThing })
-
-        } catch (error) {
+        if (createdThing === "error")
             return res.status(400).send({ error: "Failed to Create Thing" });
-        }
+
+        return res.send({ CreatedThing: createdThing })
     },
 
     async editThing(req, res) {
-        try {
-            const _id = req.params.thingId
-            const { ...editThis } = req.body
-            const thisIdExist = await Thing.findById(_id)
+        const _id = req.params.thingId
+        const { ...editThis } = req.body
+        const editedThing = await Thing.updateThingInDB(_id, editThis)
 
-            if (!thisIdExist)
-                return res.status(404).send({ error: "ID not found" })
+        if (editedThing === "error")
+            return res.status(400).send({ error: "Failed to Edit Thing" })
 
-            const editedThing = await Thing.findByIdAndUpdate(_id, { $set: editThis }, { new: true })
-
-            return res.send({ EditedThing: editedThing })
-        } catch (error) {
-            console.log(error)
-            return res.status(400).send({ error: "Failed to Edit Thing" });
-        }
+        return res.send({ EditedThing: editedThing })
     },
 
     async deleteThing(req, res) {
-        try {
-            const _id = req.params.thingId
-            const thisIdExist = await Thing.findById(_id)
+        const _id = req.params.thingId
+        const removed = Thing.removeThingInDB(_id)
 
-            if (!thisIdExist)
-                return res.status(404).send({ error: "ID not found" })
-
-            await Thing.findOneAndRemove(_id)
-
-            return res.send()
-        } catch (error) {
-            console.log(error)
+        if (removed === "error")
             return res.status(400).send({ error: "Failed to Delete Thing" });
-        }
+
+        return res.send()
     },
-
-
-
-
-    async addTag(req, res) {
-        try {
-
-        } catch (error) {
-            console.log(error)
-            return res.status(400).send({ error: "Failed to remove Tag in Thing" })
-        }
-    },
-
-    async removeTag(req, res) {
-        try {
-
-        } catch (error) {
-            console.log(error)
-            return res.status(400).send({ error: "Failed to remove Tag in Thing" })
-        }
-    },
-
-    async editTag(req, res) {
-        try {
-
-        } catch (error) {
-            console.log(error)
-            return res.status(400).send({ error: "Failed to remove Tag in Thing" })
-        }
-    },
-
-
-
-
 
     async showMeOneThing(req, res) {
-        try {
-            const _id = req.params.thingId
-            const thisIdExist = await Thing.findById(_id)
+        const _id = req.params.thingId
+        const thing = await Thing.getOneThing(_id)
 
-            if (!thisIdExist)
-                return res.status(404).send({ error: "ID not found" })
-
-            const thing = await Thing.findById(_id)
-
-            return res.send({ thing })
-        } catch (error) {
-            console.log(error)
+        if (thing === "error")
             return res.status(400).send({ error: "Failed to get Thing" })
-        }
+
+
+        return res.send({ thing })
     },
 
     async showMeAllThings(req, res) {
-        try {
-            const AllThings = await Thing.find()
 
-            if (!AllThings)
-                return res.status("Not Found anything")
+        const AllThings = await Thing.getAllThings()
 
-            return res.send({ AllThings })
-        } catch (error) {
-            return res.status(400).send({ error: "Failed to get Thing" });
-        }
+        if (AllThings === "error")
+            return res.status(400).send({ error: "Failed to get Thing" })
+
+        return res.send({ AllThings })
     }
 }

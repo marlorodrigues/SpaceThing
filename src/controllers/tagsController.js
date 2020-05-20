@@ -1,4 +1,3 @@
-const Thing = require('../models/thing')
 const Tags = require('../models/tags')
 
 module.exports = {

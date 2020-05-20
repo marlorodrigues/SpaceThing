@@ -6,11 +6,6 @@ const tagSchema = new mongoose.Schema({
         require: true
     },
 
-    referenceThingsId: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'List'
-    }],
-
     createAt: {
         type: Date,
         default: Date.now
