@@ -1,5 +1,5 @@
 const Thing = require('../../models/thing')
-const Tag = require('./Tag')
+const Tag = require('./Thing-Tag')
 
 module.exports = {
 
@@ -7,9 +7,9 @@ module.exports = {
         try {
             const creatingThing = await Thing.create(thing)
 
-            Tag.addTag(creatingThing, tags)
+            //Relationate Tag with Thing created
+            return await Tag.addTag(creatingThing, tags)
 
-            return
         } catch (error) {
             return "error"
         }
@@ -29,7 +29,21 @@ module.exports = {
         }
     },
 
-    async removeThingInDB(_id) {
+    async updateTagInThing(_id, action) { // action => true - Add || false - remove
+
+        try {
+            if (action) {
+
+            }
+            else {
+
+            }
+        } catch (error) {
+
+        }
+    },
+
+    async removeTagInThing(_id) {
         try {
             const thisIdExist = await Thing.findById(_id)
 
@@ -37,6 +51,18 @@ module.exports = {
                 return "ID not found"
 
             return await Thing.findOneAndRemove(_id)
+        } catch (error) {
+            return "error"
+        }
+    },
+
+    async removeTagInThing(_id) {
+        try {
+            const thisIdExist = await Thing.findById(_id)
+
+            console.log(thisIdExist)
+
+
         } catch (error) {
             return "error"
         }

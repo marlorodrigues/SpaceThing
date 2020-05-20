@@ -1,5 +1,5 @@
 const Thing = require('../Factory/Database/Thing')
-const Tag = require('../Factory/Database/Tag')
+const Tag = require('../Factory/Database/Thing-Tag')
 
 module.exports = {
 
