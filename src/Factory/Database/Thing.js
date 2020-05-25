@@ -8,7 +8,7 @@ module.exports = {
             const creatingThing = await Thing.create(thing)
 
             //Relationate controllerThingTag with Thing created
-            return await controllerThingTag.addTag(creatingThing, tags)
+            return await controllerThingTag.addTags(creatingThing, tags)
 
         } catch (error) {
             return "error"
@@ -23,14 +23,16 @@ module.exports = {
             if (!thisIdExist)
                 return "ID not found"
 
-            if (tags[1]) { //True Add
-                await controllerThingTag.addOneTag(editThis, tags[0])
+            const resultFirstStepOnUpdate = await Thing.findByIdAndUpdate(_id, { $set: editThis }, { new: true })
+
+            if (tags[1]) { //True Add New Tag
+                await controllerThingTag.addOneTag(resultFirstStepOnUpdate, tags[0])
             }
-            else if (!tags[1]) { //False Remove
-                await controllerThingTag.removeTag(thisIdExist, tags[0])
+            else if (!tags[1]) { //False Remove One Tag
+                await controllerThingTag.removeTag(resultFirstStepOnUpdate, tags[0])
             }
 
-            return await Thing.findByIdAndUpdate(_id, { $set: editThis }, { new: true }).populated("Tag")
+            return
 
         } catch (error) {
             return "error"

@@ -1,19 +1,52 @@
 const Tags = require('../../models/tags')
 
+async function getIdOfTag(tag) {
+    try {
+        const _id = await Tags.findOne({ name: tag })
+
+        if (_id) {
+            const { _id } = _id
+            return _id
+        }
+
+        return
+    } catch (error) {
+        console.log(error)
+        return
+    }
+}
+
+async function thisTagAlreadyExistsIn(thing, _id) {
+    try {
+        var indexOfTag = thing.Tags.indexOf(_id);
+
+        if (indexOfTag > -1) { // If here this id is already in table Tags in this Thing
+            return true
+        }
+
+        return false // Else is not
+    } catch (error) {
+
+    }
+}
+
 module.exports = {
 
     async addTags(thing, tags) {
         try {
             await Promise.all(tags.map(async tag => {
-                const _id = await Tags.findOne({ name: tag })
+                const { _id } = await Tags.findOne({ name: tag })
 
                 if (_id) {
-                    thing.Tags.push(_id);
+                    if (!await thisTagAlreadyExistsIn(thing, _id))
+                        thing.Tags.push(_id)
+
+                    return
                 }
                 else {
-                    const creatingNewTag = new Tags({ name: tag });
-                    await creatingNewTag.save();
-                    thing.Tags.push(creatingNewTag);
+                    const creatingNewTag = new Tags({ name: tag })
+                    await creatingNewTag.save()
+                    thing.Tags.push(creatingNewTag)
                 }
             }));
 
@@ -27,15 +60,18 @@ module.exports = {
 
     async addOneTag(thing, tag) {
         try {
-            const _id = await Tags.findOne({ name: tag })
+            const { _id } = await Tags.findOne({ name: tag })
 
             if (_id) {
-                thing.Tags.push(_id);
+                if (!await thisTagAlreadyExistsIn(thing))
+                    thing.Tags.push(_id)
+
+                return
             }
             else {
-                const creatingNewTag = new Tags({ name: tag });
-                await creatingNewTag.save();
-                thing.Tags.push(creatingNewTag);
+                const creatingNewTag = new Tags({ name: tag })
+                await creatingNewTag.save()
+                thing.Tags.push(creatingNewTag)
             }
 
             return await thing.save();
@@ -46,26 +82,9 @@ module.exports = {
         }
     },
 
-    async getIdToRemove(tag) {
-        try {
-            const _id = await Tags.findOne({ name: tag })
-
-            if (_id) {
-                const { _id } = _id
-                return _id
-            }
-            else {
-                return
-            }
-        } catch (error) {
-            console.log(error)
-            return
-        }
-    },
-
     async removeTag(thing, tag) {
         try {
-            const _id = await this.getIdToRemove(tag)
+            const _id = await getIdOfTag(tag)
 
             if (_id) {
                 var indexOfTag = thing.Tags.indexOf(_id);
@@ -80,7 +99,7 @@ module.exports = {
 
         } catch (error) {
             console.log(error)
-            return
+            return "error"
         }
     }
 
