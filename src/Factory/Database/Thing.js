@@ -1,5 +1,5 @@
 const Thing = require('../../models/thing')
-const Tag = require('./Thing-Tag')
+const controllerThingTag = require('./Thing-Tag')
 
 module.exports = {
 
@@ -7,8 +7,8 @@ module.exports = {
         try {
             const creatingThing = await Thing.create(thing)
 
-            //Relationate Tag with Thing created
-            return await Tag.addTag(creatingThing, tags)
+            //Relationate controllerThingTag with Thing created
+            return await controllerThingTag.addTag(creatingThing, tags)
 
         } catch (error) {
             return "error"
@@ -18,50 +18,35 @@ module.exports = {
     async updateThingInDB(_id, editThis) {
         try {
             const thisIdExist = await Thing.findById(_id)
+            const { tags } = editThis
 
             if (!thisIdExist)
                 return "ID not found"
 
-            return await Thing.findByIdAndUpdate(_id, { $set: editThis }, { new: true })
+            if (tags[1]) { //True Add
+                await controllerThingTag.addOneTag(editThis, tags[0])
+            }
+            else if (!tags[1]) { //False Remove
+                await controllerThingTag.removeTag(thisIdExist, tags[0])
+            }
+
+            return await Thing.findByIdAndUpdate(_id, { $set: editThis }, { new: true }).populated("Tag")
 
         } catch (error) {
             return "error"
         }
     },
 
-    async updateTagInThing(_id, action) { // action => true - Add || false - remove
-
-        try {
-            if (action) {
-
-            }
-            else {
-
-            }
-        } catch (error) {
-
-        }
-    },
-
-    async removeTagInThing(_id) {
+    async removeThingInDB(_id) {
         try {
             const thisIdExist = await Thing.findById(_id)
 
             if (!thisIdExist)
                 return "ID not found"
 
-            return await Thing.findOneAndRemove(_id)
-        } catch (error) {
-            return "error"
-        }
-    },
+            await Thing.remove(_id)
 
-    async removeTagInThing(_id) {
-        try {
-            const thisIdExist = await Thing.findById(_id)
-
-            console.log(thisIdExist)
-
+            return
 
         } catch (error) {
             return "error"
