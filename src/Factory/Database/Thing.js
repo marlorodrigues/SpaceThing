@@ -25,14 +25,16 @@ module.exports = {
 
             const resultFirstStepOnUpdate = await Thing.findByIdAndUpdate(_id, { $set: editThis }, { new: true })
 
+            // console.log(resultFirstStepOnUpdate);
+
             if (tags[1]) { //True Add New Tag
-                await controllerThingTag.addOneTag(resultFirstStepOnUpdate, tags[0])
+                return await controllerThingTag.addOneTag(resultFirstStepOnUpdate, tags[0])
             }
             else if (!tags[1]) { //False Remove One Tag
-                await controllerThingTag.removeTag(resultFirstStepOnUpdate, tags[0])
+                return await controllerThingTag.removeTag(resultFirstStepOnUpdate, tags[0])
             }
 
-            return
+            return resultFirstStepOnUpdate
 
         } catch (error) {
             return "error"

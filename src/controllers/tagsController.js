@@ -1,7 +1,16 @@
 const Tags = require('../models/tags')
 
+/*
+
+    - This controller do the control direct of Tags,
+    like creation, update and delete of the system,
+    not do part of relation with table Thing
+
+*/
+
 module.exports = {
 
+    //Tags is not being created here, is being created on time with Things (./Factory/Databse/Thing-Tag)
     async createTag(req, res) {
         try {
             const tag = req.body

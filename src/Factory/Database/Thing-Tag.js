@@ -2,10 +2,9 @@ const Tags = require('../../models/tags')
 
 async function getIdOfTag(tag) {
     try {
-        const _id = await Tags.findOne({ name: tag })
+        const { _id } = await Tags.findOne({ name: tag })
 
         if (_id) {
-            const { _id } = _id
             return _id
         }
 
@@ -26,7 +25,8 @@ async function thisTagAlreadyExistsIn(thing, _id) {
 
         return false // Else is not
     } catch (error) {
-
+        console.log(error)
+        return "error"
     }
 }
 
@@ -40,8 +40,6 @@ module.exports = {
                 if (_id) {
                     if (!await thisTagAlreadyExistsIn(thing, _id))
                         thing.Tags.push(_id)
-
-                    return
                 }
                 else {
                     const creatingNewTag = new Tags({ name: tag })
@@ -50,7 +48,9 @@ module.exports = {
                 }
             }));
 
-            return await thing.save();
+            await thing.save()
+
+            return thing
 
         } catch (error) {
             console.log(error)
@@ -60,13 +60,11 @@ module.exports = {
 
     async addOneTag(thing, tag) {
         try {
-            const { _id } = await Tags.findOne({ name: tag })
+            const _id = await Tags.findOne({ name: tag })
 
             if (_id) {
                 if (!await thisTagAlreadyExistsIn(thing))
                     thing.Tags.push(_id)
-
-                return
             }
             else {
                 const creatingNewTag = new Tags({ name: tag })
@@ -74,7 +72,9 @@ module.exports = {
                 thing.Tags.push(creatingNewTag)
             }
 
-            return await thing.save();
+            await thing.save();
+
+            return thing
 
         } catch (error) {
             console.log(error)
@@ -91,7 +91,8 @@ module.exports = {
 
                 if (indexOfTag > -1) {
                     thing.Tags.splice(indexOfTag, 1);
-                    return await thing.save();
+                    await thing.save();
+                    return thing
                 }
             }
 
