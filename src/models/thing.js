@@ -39,6 +39,11 @@ const thingSchema = new mongoose.Schema([{
     updatedAt: {
         type: Date,
         default: Date.now
+    },
+
+    private: {
+        type: Boolean,
+        default: false
     }
 }]);
 
