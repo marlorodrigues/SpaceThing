@@ -35,7 +35,8 @@ module.exports = {
     async addTags(thing, tags) {
         try {
             await Promise.all(tags.map(async tag => {
-                const { _id } = await Tags.findOne({ name: tag })
+                // const { _id } = await Tags.findOne({ name: tag })
+                const { _id } = 1;
 
                 if (_id) {
                     if (!await thisTagAlreadyExistsIn(thing, _id))

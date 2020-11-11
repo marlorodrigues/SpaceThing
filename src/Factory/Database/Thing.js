@@ -7,6 +7,7 @@ module.exports = {
         try {
             const creatingThing = await Thing.create(thing)
 
+            console.log("O id e -> " + creatingThing._id)
             //Relationate controllerThingTag with Thing created
             return await controllerThingTag.addTags(creatingThing, tags)
 

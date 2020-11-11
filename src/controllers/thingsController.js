@@ -4,14 +4,14 @@ const Tag = require('../Factory/Database/Thing-Tag')
 module.exports = {
 
     async createThing(req, res) {
-        // const createdThing = await Thing.createThingInDB(req.body)
+        const createdThing = await Thing.createThingInDB(req.body)
 
-        // if (createdThing === "error")
-        // return res.status(400).send({ error: "Failed to Create Thing" });
+        if (createdThing === "error")
+            return res.status(400).send({ error: "Failed to Create Thing" });
 
         console.log("Aqui mesmo")
 
-        return res.send({ CreatedThing: "createdThing" })
+        return res.send({ CreatedThing: createdThing })
     },
 
     async editThing(req, res) {

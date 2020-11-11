@@ -6,7 +6,7 @@ const tagController = require('../controllers/tagsController')
 
 router.get('/showAll/', thingsController.showMeAllThings)
 router.get('/show/:thingId', thingsController.showMeOneThing)
-router.get('/create', thingsController.createThing)
+router.post('/create', thingsController.createThing)
 router.put('/edit/:thingId', thingsController.editThing)
 router.delete('/remove/:thingId', thingsController.deleteThing)
 
