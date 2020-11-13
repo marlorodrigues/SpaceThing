@@ -37,7 +37,7 @@ app.use('/', require('./src/routes/things.routes'))
 // }
 
 
-app.listen(3000, function () {
+app.listen(process.env.PORT || 3000, function () {
     // run().catch(console.dir);
     console.log("Servidor pronto");
 
