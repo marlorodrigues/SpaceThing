@@ -1,4 +1,4 @@
-const mongoose = require('../database/index');
+const mongoose = require('../index');
 
 const thingSchema = new mongoose.Schema([{
 

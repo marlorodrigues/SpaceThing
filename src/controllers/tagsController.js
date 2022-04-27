@@ -1,4 +1,4 @@
-const Tags = require('../models/tags')
+const Tags = require('../database/models/tags')
 
 /*
 

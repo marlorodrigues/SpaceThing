@@ -1,4 +1,4 @@
-const Thing = require('../../models/thing')
+const Thing = require('../../database/models/thing')
 const controllerThingTag = require('./Thing-Tag')
 
 module.exports = {
