@@ -1,5 +1,1 @@
-BackEnd de um projeto, que armazena coisas nele, qualquer coisa, visando buscar por palavra para relembrar futuramente.
-
-Exemplo:
-
-Links que voce possa marcar como visto, ver depois, ...
+BackEnd em NodeJs e MongoDB, que armazena coisas ("things") no banco de dados utilizando-se de rotas expostas via ExpressJS e utilizando o design pattern Factory para organização do código, é feito também um relacionamento simples entre as 'Things' e 'Tags'. Futuramente pretendo adicionar um mecanismo de login criptografado e de busca. Ainda, transferir o banco para a nuvem através do Atlas e o subir o backend com docker via EC2 da AWS.
