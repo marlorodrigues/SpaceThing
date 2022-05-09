@@ -6,6 +6,8 @@
     const fs = require('fs');
     const { currentDate } = require('./src/helpers/index');
     const numCPUs = require('os').cpus().length + 1;
+    const pm2 = require('pm2')
+
 //#endregion
 
 //#region Functions Useds
@@ -46,28 +48,26 @@
     const uncaughtException = (error, origin = "unused") => {
         logger.error(`${currentDate()} - uncaughtException: ${error}`)
 
-        pm2.restart('proxy', (err, ret) => {
+        pm2.restart('space_thing', (err, ret) => {
             if (err) {
                 logger.error(`${currentDate()} - Error on restart API Node: ${err}`)
             }
             else {
                 logger.info(`${currentDate()} - Restart API Node Success`)
-                pm2.restart(1, (err, app) => {
-                    if(err) logger.error(`${currentDate()} - Error on restart API Node: ${err}`)
-                })
+                gracefull_shutdown()
             }
         });
     }
 
 //#endregion
 
-//#region Gracefull Shutdown Master
+//#region Gracefull Shutdown
     process.on('uncaughtException', uncaughtException);
     process.on('exit', gracefull_shutdown)
 //#endregion
 
 //#region Cluster
-    if (cluster.isMaster) { 
+    if (inCluster && cluster.isMaster) { 
         logger.info(`${currentDate()} - API Node Started`)
 
         for (let i = 0; i < numCPUs; i++){
