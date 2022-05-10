@@ -1,3 +1,7 @@
+require('dotenv').config({
+    path: process.env.NODE_ENV === 'test'? '.env.test' : '.env'
+});
+
 const nodemailer = require('nodemailer');
 const logger = require('./logger');
 
@@ -16,7 +20,7 @@ async function createTransporter() {
 async function prepareMailOptions(to, subject, html) {
 
     const mailOptions = {
-        from: "carteiro@atmatecnologia.com.br",
+        from: process.env.EMAIL,
         to,
         subject,
         html

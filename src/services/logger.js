@@ -7,8 +7,7 @@ const logger = winston.createLogger({
     ),
     transports: [
         new winston.transports.File({ filename: './error.log', level: 'error' }),
-        new winston.transports.File({ filename: './info.log', level: 'info' }),
-        new winston.transports.File({ filename: './audit.log', level: 'audit' }),
+        new winston.transports.File({ filename: './info.log', level: 'info' })
     ],
 });
  

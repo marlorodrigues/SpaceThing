@@ -1,10 +1,14 @@
+require('dotenv').config({
+    path: process.env.NODE_ENV === 'test'? '.env.test' : '.env'
+});
+
 //#region Requires
     const app = require('./app');
     const https = require('https');
     const cluster = require('cluster');
-    const logger = require('./src/services/logger');
+    const logger = require('./services/logger');
     const fs = require('fs');
-    const { currentDate } = require('./src/helpers/index');
+    const { currentDate } = require('./helpers/index');
     const numCPUs = require('os').cpus().length + 1;
     const pm2 = require('pm2')
 
@@ -14,8 +18,8 @@
 
     const production_server = () => {
         const options = {
-            key: fs.readFileSync(proces.env.KEY_SSL),
-            cert: fs.readFileSync(proces.env.CERT_SSL)
+            key: fs.readFileSync(process.env.KEY_SSL),
+            cert: fs.readFileSync(process.env.CERT_SSL)
         }
         
         const httpsServer = https.createServer(options, app)
@@ -67,7 +71,8 @@
 //#endregion
 
 //#region Cluster
-    if (inCluster && cluster.isMaster) { 
+
+    if (process.env.CLUSTER === "true" && cluster.isMaster) { 
         logger.info(`${currentDate()} - API Node Started`)
 
         for (let i = 0; i < numCPUs; i++){
@@ -92,7 +97,7 @@
     }
     else {
         try {
-            if (process.env.SSL) production_server();
+            if (process.env.SSL === "true") production_server();
             else development_server()
         }
         catch (error) {

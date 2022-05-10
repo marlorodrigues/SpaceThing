@@ -1,4 +1,4 @@
-const mongoose = require('../database/index');
+const mongoose = require('../index');
 
 const tagSchema = new mongoose.Schema({
     name: {

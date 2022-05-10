@@ -5,7 +5,8 @@ require('dotenv').config({
 const express = require('express')
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const logger = require('./src/services/logger');
+const logger = require('./services/logger');
+const { currentDate } = require('./helpers/index')
 
 class AppController {
     constructor() {
@@ -32,10 +33,9 @@ class AppController {
     }
 
     routes() {
-        this.express.use('/api/things', require('./src/routes/things.routes'));
-        this.express.use('/api/tags', require('./src/routes/tags.routes'));
+        this.express.use('/api/things', require('./routes/things.routes'));
+        this.express.use('/api/tags', require('./routes/tags.routes'));
     }
 }
 
 module.exports = new AppController().express
-

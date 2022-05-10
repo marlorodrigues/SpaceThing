@@ -1,4 +1,4 @@
-const Tags = require('../../database/models/tags')
+const Tags = require('../../database/mongodb/models/tags')
 
 async function getIdOfTag(tag) {
     try {
