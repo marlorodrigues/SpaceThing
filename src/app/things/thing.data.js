@@ -1,5 +1,5 @@
 const Thing = require('../../database/mongodb/models/thing')
-const controllerThingTag = require('./Thing-Tag')
+const controllerThingTag = require('../tags/thing-tag.data')
 
 module.exports = {
 
