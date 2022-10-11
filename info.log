@@ -1,3 +1,0 @@
-{"level":"info","message":"2022-05-10T13:28:46.636Z - Starting API Node"}
-{"level":"error","message":"2022-05-10T13:28:47.024Z - uncaughtException: ReferenceError: appPort is not defined"}
-{"level":"error","message":"2022-05-10T13:28:47.402Z - Error on restart API Node: Error: process or namespace not found"}

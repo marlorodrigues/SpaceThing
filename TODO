@@ -1,2 +1,3 @@
  - Integrar .env
  - Integrar sequelize
+ - Seprar hlpers de utils

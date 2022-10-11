@@ -1,4 +1,4 @@
-const Tags = require('../database/mongodb/models/tags')
+const Tags = require('../../database/mongodb/models/tags')
 
 /*
 

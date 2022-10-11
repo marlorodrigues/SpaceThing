@@ -1,10 +1,10 @@
-const logger = require("../services/logger");
-const { currentDate } = require("../helpers/index");
+const logger = require("../../services/logger");
+const { currentDate } = require("../../helpers/index");
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { token_hash } = require('../../config/.secrets/secrets.json');
 const pool = require("../database/v1");
-const nodemailer = require('../services/mailer');
+const nodemailer = require('../../services/mailer');
 
 //#region Authentication
     function gerarSalt(){
@@ -76,7 +76,7 @@ module.exports = {
             });
 
         } catch (error) {
-            logger.error(`${currentDate()} - authorize_user: ${error}`)
+            logger.error(`${currentDate()} - ${error.message} - ${error.stack}`)
             return res.status(500).send({ message: "Erro ao autenticar" })
         }
     },
@@ -112,7 +112,7 @@ module.exports = {
             logger.info(`${currentDate()} - update_password: user_id ${id} atualizado com sucesso`)
             return res.send({ message: "Senha atualizada com sucesso" })
         } catch (error) {
-            logger.error(`${currentDate()} - update_password: ${error}`)
+            logger.error(`${currentDate()} - ${error.message} - ${error.stack}`)
             return res.status(500).send({ message: "Erro ao executar authorize_user", auth: false})
         }
     },
@@ -143,7 +143,7 @@ module.exports = {
             logger.info(`${ currentDate() } - forgot_password: email enviado com sucesso para ${email}`)
             return res.send({ message: "Senha criada com sucesso", msg, rota })
         } catch (error) {
-            logger.error(`${ currentDate() } - forgot_password: ${error}`)
+            logger.error(`${currentDate()} - ${error.message} - ${error.stack}`)
             return res.status(500).send({ message: "Erro ao recuperar senha" })
         }
     }

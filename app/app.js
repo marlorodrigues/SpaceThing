@@ -17,6 +17,8 @@ class AppController {
     }
 
     middlewares() {
+        this.express.set('view cache', true);
+        this.express.use(compression());
         this.express.use(express.json())
         this.express.use(express.Router({ caseSensitive: true }));
         this.express.use(express.urlencoded({ extended: true }));
@@ -25,7 +27,7 @@ class AppController {
         this.express.use(cors({
             origin: '*',
             methods: ['GET', 'POST', 'PUT', 'DELETE'],
-            allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin'],
+            allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'Content-Encoding', "Accept-Encoding", 'Cache-Control'],
             preflightContinue: true,
             optionsSuccessStatus: 204,
             contentType: 'application/json'

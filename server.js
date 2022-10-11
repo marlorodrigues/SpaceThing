@@ -11,7 +11,6 @@ require('dotenv').config({
     const { currentDate } = require('./helpers/index');
     const numCPUs = require('os').cpus().length + 1;
     const pm2 = require('pm2')
-
 //#endregion
 
 //#region Functions Useds
@@ -101,7 +100,7 @@ require('dotenv').config({
             else development_server()
         }
         catch (error) {
-            logger.error(`${currentDate()} - Erro on init server: ${error}`)
+            logger.error(`${currentDate()} - ${error.message} - ${error.stack}`)
             process.exit(1);
         }
     }

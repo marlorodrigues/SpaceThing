@@ -34,7 +34,7 @@ module.exports = {
                 error: res.rowCount === 0 ? "Nothing changed" : "None",
             }
         } catch (error) {
-            logger.error(`Erro ao executar query ${query}: ${error}`);
+            logger.error(`${currentDate()} - ${query} - ${error.message} - ${error.stack}`)
             
             return {
                 rows: [],
@@ -47,7 +47,7 @@ module.exports = {
         try {
             await pool.end()    
         } catch (error) {
-            logger.error(`Erro ao fechar conexão com o banco de dados v1: ${error}`);
+            logger.error(`${currentDate()} - ${error.message} - ${error.stack}`)
         }
     }
 };

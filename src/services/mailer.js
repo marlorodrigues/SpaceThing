@@ -43,7 +43,7 @@ module.exports = {
             })
         }
         catch (err) {
-            logger.error(err);
+            logger.error(`${currentDate()} - ${error.message} - ${error.stack}`)
             return res.status(500).send({err})
         }
     },
