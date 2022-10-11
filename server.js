@@ -3,12 +3,12 @@ require('dotenv').config({
 });
 
 //#region Requires
-    const app = require('./app');
+    const app = require('./app/app');
     const https = require('https');
     const cluster = require('cluster');
-    const logger = require('./services/logger');
+    const logger = require('./src/services/logger');
     const fs = require('fs');
-    const { currentDate } = require('./helpers/index');
+    const { currentDate } = require('./app/helpers/index');
     const numCPUs = require('os').cpus().length + 1;
     const pm2 = require('pm2')
 //#endregion

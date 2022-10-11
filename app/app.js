@@ -5,7 +5,7 @@ require('dotenv').config({
 const express = require('express')
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const logger = require('./services/logger');
+const logger = require('../src/services/logger');
 const { currentDate } = require('./helpers/index')
 
 class AppController {

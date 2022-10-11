@@ -1,10 +1,10 @@
-const logger = require("../../services/logger");
-const { currentDate } = require("../../helpers/index");
+const logger = require("../../src/services/logger");
+const { currentDate } = require("../helpers/index");
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const { token_hash } = require('../../config/.secrets/secrets.json');
-const pool = require("../database/v1");
-const nodemailer = require('../../services/mailer');
+const { token_hash } = require('../../src/.secrets/secrets.json');
+const pool = require("../../src/database/v1");
+const nodemailer = require('../../src/services/mailer');
 
 //#region Authentication
     function gerarSalt(){
