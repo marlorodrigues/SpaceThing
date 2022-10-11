@@ -1,3 +1,5 @@
  - Integrar .env
  - Integrar sequelize
- - Seprar hlpers de utils
+ - Separar helpers de utils
+ - Usar ETag na resposta
+ - 
