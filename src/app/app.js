@@ -1,12 +1,17 @@
 require('dotenv').config({
-    path: process.env.NODE_ENV === 'test'? '.env.test' : '.env'
+    path: process.env.NODE_ENV === 'test'? 'config/.env.test' : 'config/.env'
 });
 
 const express = require('express')
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const logger = require('../src/services/logger');
-const { currentDate } = require('./helpers/index')
+const compression = require('compression');
+const path = require('path');
+
+const logger = require('../services/logger');
+const {
+    date: { currentDate }
+} = require('../utilities/index')
 
 class AppController {
     constructor() {
@@ -36,14 +41,14 @@ class AppController {
     }
 
     routes() {
-        this.express.use('/api/things', require('./routes/things.routes'));
-        this.express.use('/api/tags', require('./routes/tags.routes'));
+        this.express.use('/api/things', require('./things/things.routes'));
+        this.express.use('/api/tags', require('./tags/tags.routes'));
     }
 
     expose_static_files() {
-        this.express.use('/images/equip', express.static(path.join(__dirname, '..', 'public/equip')));
-        this.express.use('/images/station', express.static(path.join(__dirname, '..', 'public/stations')));
-        this.express.use('/images/profiles', express.static(path.join(__dirname, '..', 'public/profiles')));
+        this.express.use('/uploads', express.static(path.join(__dirname, '..', 'uploads/equip')));
+        // this.express.use('/images/station', express.static(path.join(__dirname, '..', 'uploads/stations')));
+        // this.express.use('/images/profiles', express.static(path.join(__dirname, '..', 'uploads/profiles')));
     }
 }
 

@@ -12,7 +12,7 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${
     connectTimeoutMS: 15000,
     socketTimeoutMS: 15000,
     maxIdleTimeMS: 10000
-}).catch(e => console.log("Erro -> " + e));;
+}).catch(e => console.log("Erro -> " + e));
 
 mongoose.Promise = global.Promise;
 

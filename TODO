@@ -1,7 +1,1 @@
- - Integrar .env
- - Integrar sequelize
- - Separar helpers de utils
- - Usar ETag na resposta
- - Substituir dotenv por arquivo json
- - Refresh token
- 
+

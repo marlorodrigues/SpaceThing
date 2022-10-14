@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const thingsController = require('../controllers/thingsController')
-const tagController = require('../controllers/tagsController')
+const thingsController = require('./things.controllers')
+const tagController = require('../tags/tags.controllers')
 
 
 router.get('/showAll/', thingsController.showMeAllThings)

@@ -1,14 +1,14 @@
 require('dotenv').config({
-    path: process.env.NODE_ENV === 'test'? '.env.test' : '.env'
+    path: process.env.NODE_ENV === 'test'? 'config/.env.test' : 'config/.env'
 });
 
 //#region Requires
-    const app = require('../app/app');
+    const app = require('./app/app');
     const https = require('https');
     const cluster = require('cluster');
     const logger = require('./services/logger');
     const fs = require('fs');
-    const { currentDate } = require('./app/helpers/index');
+    const { currentDate } = require('./utilities/date');
     const numCPUs = require('os').cpus().length + 1;
     const pm2 = require('pm2')
 //#endregion
