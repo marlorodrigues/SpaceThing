@@ -1,6 +1,9 @@
 const Thing = require('../../database/mongodb/models/thing')
 const controllerThingTag = require('../tags/thing-tag.data')
 
+const logger = require('../../services/logger')
+const { currentDate } = require('../../utilities/date')
+
 module.exports = {
 
     async createThingInDB({ thing, tags }) {
@@ -12,7 +15,7 @@ module.exports = {
             return await controllerThingTag.addTags(creatingThing, tags)
 
         } catch (error) {
-            return "error"
+            logger.error(`${currentDate()} - ${error.message} - ${error.stack}`)
         }
     },
 
@@ -38,7 +41,7 @@ module.exports = {
             return resultFirstStepOnUpdate
 
         } catch (error) {
-            return "error"
+            logger.error(`${currentDate()} - ${error.message} - ${error.stack}`)
         }
     },
 
@@ -54,7 +57,7 @@ module.exports = {
             return
 
         } catch (error) {
-            return "error"
+            logger.error(`${currentDate()} - ${error.message} - ${error.stack}`)
         }
     },
 
@@ -68,16 +71,21 @@ module.exports = {
             return await Thing.findById(_id)
 
         } catch (error) {
-            return "error"
+            logger.error(`${currentDate()} - ${error.message} - ${error.stack}`)
         }
     },
 
     async getAllThings() {
-        const AllThings = await Thing.find()
+        try {
+            const AllThings = await Thing.find()
 
-        if (!AllThings)
-            return res.status("Not Found anything")
+            if (!AllThings)
+                return res.status("Not Found anything")
 
-        return AllThings
+            return AllThings
+        }
+        catch (error) {
+            logger.error(`${currentDate()} - ${error.message} - ${error.stack}`)
+        }
     }
 }

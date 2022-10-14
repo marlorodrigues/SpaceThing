@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const tagController = require('../controllers/tagsController')
+const tagController = require('./tags.controllers')
+const auth = require('../../middlewares/auth')
+const unexpected = require('../../middlewares/unexpected')
 
-router.post('/createTag', tagController.createTag)
-router.get('/showTags', tagController.showMeAllThings)
-router.put('/editTag/:tagId', tagController.editTag)
-router.get('/showTag/:tagId', tagController.showMeOneTag)
-router.delete('/removeTag/:tagId', tagController.deleteTag)
+router.post('/createTag', auth.verify_token, tagController.createTag, unexpected.unexpectedException)
+router.get('/showTags', auth.verify_token, tagController.showMeAllThings, unexpected.unexpectedException)
+router.put('/editTag/:tagId', auth.verify_token, tagController.editTag, unexpected.unexpectedException)
+router.get('/showTag/:tagId', auth.verify_token, tagController.showMeOneTag, unexpected.unexpectedException)
+router.delete('/removeTag/:tagId', auth.verify_token, tagController.deleteTag, unexpected.unexpectedException)
 
 module.exports = router;

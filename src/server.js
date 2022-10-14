@@ -2,6 +2,8 @@ require('dotenv').config({
     path: process.env.NODE_ENV === 'test'? 'config/.env.test' : 'config/.env'
 });
 
+console.log(`NODE_ENV: ${process.env.NODE_ENV}`)
+
 //#region Requires
     const app = require('./app/app');
     const https = require('https');

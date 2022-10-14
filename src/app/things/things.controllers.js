@@ -1,9 +1,9 @@
-const Thing = require('./thing.models')
+const Thing = require('./thing.data')
 const Tag = require('../tags/tags.models')
 
 module.exports = {
 
-    async createThing(req, res) {
+    async createThing(req, res, next) {
         const createdThing = await Thing.createThingInDB(req.body)
 
         if (createdThing === "error")
@@ -14,7 +14,7 @@ module.exports = {
         return res.send({ CreatedThing: createdThing })
     },
 
-    async editThing(req, res) {
+    async editThing(req, res, next) {
         const _id = req.params.thingId
         const { ...editThis } = req.body
         const editedThing = await Thing.updateThingInDB(_id, editThis)
@@ -25,9 +25,9 @@ module.exports = {
         return res.send({ EditedThing: editedThing })
     },
 
-    async deleteThing(req, res) {
+    async deleteThing(req, res, next) {
         const _id = req.params.thingId
-        const removed = Thing.removeThingInDB(_id)
+        const removed = await Thing.removeThingInDB(_id)
 
         if (removed === "error")
             return res.status(400).send({ error: "Failed to Delete Thing" });
@@ -35,7 +35,7 @@ module.exports = {
         return res.send()
     },
 
-    async showMeOneThing(req, res) {
+    async showMeOneThing(req, res, next) {
         const _id = req.params.thingId
         const thing = await Thing.getOneThing(_id)
 
@@ -46,7 +46,7 @@ module.exports = {
         return res.send({ thing })
     },
 
-    async showMeAllThings(req, res) {
+    async showMeAllThings(req, res, next) {
 
         const AllThings = await Thing.getAllThings()
 
