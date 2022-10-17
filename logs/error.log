@@ -1,0 +1,8 @@
+{"level":"error","message":"2022-10-17T13:43:29.830Z - uncaughtException: ReferenceError: appPort is not defined"}
+{"level":"error","message":"2022-10-17T13:43:30.225Z - Error on restart API Node: Error: process or namespace not found"}
+{"level":"error","message":"2022-10-17T13:44:47.758Z - uncaughtException: ReferenceError: appPort is not defined"}
+{"level":"error","message":"2022-10-17T13:44:47.781Z - Error on restart API Node: Error: process or namespace not found"}
+{"level":"error","message":"2022-10-17T13:45:30.735Z - uncaughtException: ReferenceError: appPort is not defined"}
+{"level":"error","message":"2022-10-17T13:45:30.767Z - Error on restart API Node: Error: process or namespace not found"}
+{"level":"error","message":"2022-10-17T13:45:43.892Z - uncaughtException: ReferenceError: appPort is not defined"}
+{"level":"error","message":"2022-10-17T13:45:43.944Z - Error on restart API Node: Error: process or namespace not found"}

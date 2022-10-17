@@ -1,4 +1,4 @@
-const Thing = require('../../database/mongodb/models/thing')
+const Thing = require('./thing.models')
 const controllerThingTag = require('../tags/thing-tag.data')
 
 const logger = require('../../services/logger')

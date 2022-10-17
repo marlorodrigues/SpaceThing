@@ -1,0 +1,5 @@
+{"level":"info","message":"2022-10-17T13:45:43.493Z - Starting API Node"}
+{"level":"error","message":"2022-10-17T13:45:43.892Z - uncaughtException: ReferenceError: appPort is not defined"}
+{"level":"error","message":"2022-10-17T13:45:43.944Z - Error on restart API Node: Error: process or namespace not found"}
+{"level":"info","message":"2022-10-17T14:12:10.451Z - Starting API Node"}
+{"level":"info","message":"2022-10-17T14:12:10.860Z - Server Running on port 3500 without HTTPS!!!"}

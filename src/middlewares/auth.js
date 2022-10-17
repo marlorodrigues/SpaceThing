@@ -1,7 +1,7 @@
 const logger = require("../services/logger");
 const jwt = require('jsonwebtoken');
 // const { token_hash } = require('../../config/.secrets/secrets.json');
-const { formatDateLocal } = require('../helpers/index')
+const { currentDate } = require('../utilities/date')
 
 module.exports = {
 
@@ -17,7 +17,7 @@ module.exports = {
 
             return true
         } catch (error) {
-            logger.error(`${formatDateLocal()} - verify_token: ${error.message} -> AUDIT: request ${token} - ip: ${req.ip} - method: ${req.method} - url: ${req.url}`);
+            logger.error(`${currentDate()} - verify_token: ${error.message} -> AUDIT: request ${token} - ip: ${req.ip} - method: ${req.method} - url: ${req.url}`);
             return res.status(500).send({ auth: false, message: 'Failed to authenticate token 2.' });
         }
     }
