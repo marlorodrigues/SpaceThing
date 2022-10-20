@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const tagController = require('./tags.controllers')
 const auth = require('../../middlewares/auth')
-const unexpected = require('../../middlewares/unexpected')
+const unexpected = require('../../middlewares/errors')
 
 router.post('/createTag', auth.verify_token, tagController.createTag, unexpected.unexpectedException)
 router.get('/showTags', auth.verify_token, tagController.showMeAllThings, unexpected.unexpectedException)

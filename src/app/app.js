@@ -41,12 +41,13 @@ class AppController {
     }
 
     routes() {
+        this.express.use('api/users', require('./users/users.routes'))
         this.express.use('/api/things', require('./things/things.routes'));
         this.express.use('/api/tags', require('./tags/tags.routes'));
     }
 
     expose_static_files() {
-        this.express.use('/uploads', express.static(path.join(__dirname, '..', 'uploads/equip')));
+        this.express.use('/uploads', express.static(path.join(__dirname, '..', 'uploads/')));
         // this.express.use('/images/station', express.static(path.join(__dirname, '..', 'uploads/stations')));
         // this.express.use('/images/profiles', express.static(path.join(__dirname, '..', 'uploads/profiles')));
     }

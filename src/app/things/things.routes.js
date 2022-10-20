@@ -3,7 +3,7 @@ const router = express.Router();
 const thingsController = require('./things.controllers')
 const tagController = require('../tags/tags.controllers')
 const auth = require('../../middlewares/auth')
-const unexpected = require('../../middlewares/unexpected')
+const unexpected = require('../../middlewares/errors')
 
 router.get('/showAll/', auth.verify_token, thingsController.showMeAllThings, unexpected.unexpectedException)
 router.get('/show/:thingId', auth.verify_token, thingsController.showMeOneThing, unexpected.unexpectedException)

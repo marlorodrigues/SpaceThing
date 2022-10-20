@@ -12,7 +12,7 @@ module.exports = {
         return await Users.create(user)
     },
 
-    findAll: async () => {
+    find_all: async () => {
         const result = await Users.find({})
 
         delete result.password_salt
@@ -21,7 +21,7 @@ module.exports = {
         return result
     },
 
-    findOne: async (id) => {
+    find_one: async (id) => {
         const result = await Users.findOne({ _id: id })
         
         delete result.password_salt
@@ -48,7 +48,7 @@ module.exports = {
         return result
     },
 
-    findByLoginOrEmail: async (login) => {
+    find_by_login_or_email: async (login) => {
         return await Users.findOne({ $or: [{ login: login }, { email: login }] })
     },
 

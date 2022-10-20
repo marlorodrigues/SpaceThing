@@ -2,20 +2,27 @@ module.exports = {
 
     /**
     * Verify all parameters in the request
-    * @param {String} params content of req.body or req.query
-    * @param {Object} params content of req.body or req.query
-    * @returns {Boolean} true if all parameter are valid
+    * @param {Any} params content to be checked
+    * @returns {Boolean} true if all parameters are present, false otherwise
     */
-         check_params(...params) {
-            if(typeof(params) === "object"){
-              for(let param in params){
-                if(!params[param]) return false
-              }
-            }
-            else {
-              if(!params) return false
-            }
-            
-            return true
-          }  
+	check_params(params) {
+		if(typeof(params) === "object"){
+			for(let key in params){
+				if(params[key] == undefined || params[key] == null) return false
+			}
+		}
+		else if (typeof (params) === "array") {
+			for (let i = 0; i < params.length; i++) {
+				if (params[i] == undefined || params[i] == null) return false
+			}
+		}
+		else if (typeof (params) === "string" || typeof (params) === "number") {
+			if(params == undefined || params == null) return false
+		}
+		else {
+			return false
+		}
+		
+		return true
+	}  
 }
