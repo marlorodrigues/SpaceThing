@@ -1,5 +1,6 @@
+require('../src/database/mongodb/index');
 const Users = require('../src/app/users/users.data');
-const _mongodb = require('../src/database/mongodb/index');
+
 
 var future_reference = undefined
 
