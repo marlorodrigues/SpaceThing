@@ -17,12 +17,13 @@ module.exports = {
 
         env.NODE_ENV = process.env.NODE_ENV || 'development';
         env.PORT = process.env.PORT || 3000;
-        
+
         env.SSL = process.env.SSL || 'false';
         env.KEY_SSL = process.env.KEY_SSL || 'config/key.pem';
         env.CERT_SSL = process.env.CERT_SSL || 'config/cert.pem';
 
         env.CLUSTER = process.env.CLUSTER || 'false';
+        env.USE_DB = process.env.USE_DB || 'nosql'
 
         env.SQL_DB_URL = process.env.SQL_DB_URL || ''
         env.SQL_DB_USER = process.env.SQL_DB_USER || ''

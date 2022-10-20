@@ -1,6 +1,6 @@
-const mongoose = require('../../database/mongodb/index');
+const _mongoose = require('mongoose');
 
-const tagSchema = new mongoose.Schema({
+const tagSchema = new _mongoose.Schema({
     name: {
         type: String,
         require: true
@@ -12,6 +12,6 @@ const tagSchema = new mongoose.Schema({
     }
 })
 
-const Tags = mongoose.model('Tags', tagSchema);
+const Tags = _mongoose.model('Tags', tagSchema);
 
 module.exports = Tags;
