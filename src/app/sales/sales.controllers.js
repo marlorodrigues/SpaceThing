@@ -1,4 +1,6 @@
 const Sales = require('./sales.data');
+const Account = require('../account/account.data');
+
 const { checkers, date, misc } = require('../../utilities/index');
 const logger = require('../../services/logger');
 
@@ -9,7 +11,14 @@ module.exports = {
                 return res.status(400).json({ message: 'Missing params' });
             
             const sale = await Sales.create(req.body)
-            
+
+            const account = await Account.find({ type: sale.origin });
+            const new_value = account[0].value + sale.value;
+
+            var tmp = await Account.update(account[0]._id, { value: new_value }, { new: true });
+
+            logger.info(`Account updated! New value on '${sale.origin}' is ${tmp.value}`);
+
             return res.status(200).send({ sale });
         } catch (error) {
             logger.error(`${date.currentDate()} -  ${error.message} - ${error.stack}`);

@@ -1,8 +1,9 @@
 const Account = require('./account.models');
+const { date, misc } = require('../../utilities/index');
 
 module.exports = {
-    create: async (sale) => {
-        return await Account.create(sale);
+    create: async (account) => {
+        return await Account.create(account);
     },
 
     find: async (filter) => {
@@ -11,7 +12,7 @@ module.exports = {
     },
 
     update: async (id, account) => {
-        sale.update_at = date.new_date();
+        account.update_at = date.new_date();
         const result = await Account.findByIdAndUpdate(id, {$set: account}, { new: true });
         return result
     },

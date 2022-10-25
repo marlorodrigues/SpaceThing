@@ -9,7 +9,7 @@ const accountSchema = new _mongoose.Schema({
         type: Number,
         require: true
     },
-    observations: { //Observações
+    description: { //Observações
         type: String,
         require: false
     },
