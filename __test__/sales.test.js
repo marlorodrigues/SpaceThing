@@ -24,14 +24,14 @@ describe('Sales', () => {
     });
 
     it('should find a sale', async () => {
-        const sale = await Sales.find_one(future_reference.id);
+        const sale = await Sales.find({_id: future_reference.id});
 
         expect(sale).not.toBe(false)
-        expect(sale.type).toBe('entrada');
+        expect(sale[0].id).toBe(future_reference.id);
     });
 
     it('should find all users', async () => {
-        const _sales = await Sales.find_all();
+        const _sales = await Sales.find({});
 
         expect(_sales).not.toBe(false)
         expect(_sales).not.toHaveLength(0);

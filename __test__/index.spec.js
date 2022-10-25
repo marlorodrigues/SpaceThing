@@ -1,1 +1,3 @@
-require('./users.test')
+require('./users.test');
+require('./sales.test');
+require('./associate.test');

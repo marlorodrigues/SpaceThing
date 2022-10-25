@@ -57,7 +57,10 @@ console.log(`NODE_ENV: ${process.env.NODE_ENV}`)
 //#region Cluster
 
     if (env.CLUSTER == "true" && cluster.isMaster) { 
+
         logger.info(`${currentDate()} - Master ${process.pid} is running`);
+
+        require('./database/mongodb/index');
 
         for (let i = 0; i < numCPUs; i++){
             console.log(`${currentDate()} - Forking Worker ${i}`)
@@ -73,6 +76,8 @@ console.log(`NODE_ENV: ${process.env.NODE_ENV}`)
     }
     else {
         try {
+            if (env.CLUSTER == "false") require('./database/mongodb/index');
+
             if (env.SSL === "true") production_server();
             else development_server()
         }

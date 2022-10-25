@@ -5,9 +5,12 @@ const { currentDate } = require('../utilities/date')
 
 module.exports = {
 
-    async verify_token(token, res) {
+    async verify_token(req, res, next) {
         try {
-            return true
+            req.locals = {};
+
+            console.log(req.method ,"- Going to",  req.baseUrl+req.url);
+            return next()
 
             if (!token) return 'No token provided.'
 

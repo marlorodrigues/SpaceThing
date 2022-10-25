@@ -5,13 +5,8 @@ module.exports = {
         return await Sales.create(sale)
     },
 
-    find_all: async () => {
-        const result = await Sales.find({})
-        return result
-    },
-
-    find_one: async (id) => {
-        const result = await Sales.findOne({ _id: id })
+    find: async (filter) => {
+        const result = await Sales.find(filter).lean()
         return result
     },
 
