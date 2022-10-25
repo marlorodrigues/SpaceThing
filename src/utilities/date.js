@@ -9,4 +9,9 @@ module.exports = {
   
         return currentDate
     },
+
+    new_date() {
+        return new Date()
+    }
+        
 }

@@ -38,8 +38,13 @@ module.exports = {
         try {
             if (!checkers.check_params(req.body))
                 return res.status(400).json({ message: 'Missing params' });
+            
+            if (!req.body.id)
+                return res.status(400).json({ message: 'Missing id' });
 
-            return res.status(200).send({ sale: '' });
+            const sale = await Sales.update(req.body.id, req.body)
+
+            return res.status(200).send({ sale });
         } catch (error) {
             logger.error(`${date.currentDate()} -  ${error.message} - ${error.stack}`);
             req.locals.error = error;
@@ -49,11 +54,11 @@ module.exports = {
 
     delete_sale: async (req, res, next) => {
         try {
-            if (!checkers.check_params(req.params))
+            if (!checkers.check_params(req.query))
                 return res.status(400).json({ message: 'Missing params' });
 
-            const { sale_id } = req.params;
-            const sale = await Users.delete(sale_id);
+            const { sale_id } = req.query;
+            const sale = await Sales.delete(sale_id);
 
             return res.status(200).send({ sale });
         } catch (error) {

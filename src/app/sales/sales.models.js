@@ -36,7 +36,11 @@ const salesSchema = new _mongoose.Schema({
     create_at: { //Data de criação
         type: Date,
         default: Date.now
-    }
+    },
+    update_at: { //Data de atualização
+        type: Date,
+        default: Date.now
+    },
 })
 
 const sales = _mongoose.model('sales', salesSchema);
