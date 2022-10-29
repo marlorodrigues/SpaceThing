@@ -14,7 +14,7 @@ Used:
  - Criptografia Salt and Pepper
  - Upload de arquivos
  - Cluster
- - 
+ - Jest
 
 Future: 
 
