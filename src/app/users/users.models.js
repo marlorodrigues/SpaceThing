@@ -1,6 +1,6 @@
-const { get_environtment } = require('../../utilities/miscellaneous');
+const { get_environment } = require('../../utilities/miscellaneous');
 const { sequelize_options } = require('../../utilities/definitions');
-const env = get_environtment();
+const env = get_environment();
 
 var Users = undefined;
 

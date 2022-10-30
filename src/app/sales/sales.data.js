@@ -11,6 +11,11 @@ module.exports = {
         return result;
     },
 
+    find_sort: async (filter, sort) => {
+        const result = await Sales.find(filter).sort(sort).lean();
+        return result;
+    },
+
     update: async (id, sale) => {
         sale.update_at = date.new_date();
         const result = await Sales.findByIdAndUpdate(id, { $set: sale }, { new: true });

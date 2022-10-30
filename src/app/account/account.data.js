@@ -12,7 +12,7 @@ module.exports = {
     },
 
     update: async (id, account) => {
-        account.update_at = date.new_date();
+        account.update_at = date.today();
         const result = await Account.findByIdAndUpdate(id, {$set: account}, { new: true });
         return result
     },

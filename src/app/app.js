@@ -41,8 +41,11 @@ class AppController {
     }
 
     routes() {
-        // this.express.use('/api/users', require('./users/users.routes'));
+        this.express.use('/api/account', require('./account/account.routes'));
         this.express.use('/api/sales', require('./sales/sales.routes'));
+
+        // this.express.use('/api/users', require('./users/users.routes'));
+        
 
         this.express.get('/api/ping', (req, res) => {
             res.status(200).send({ message: 'pong' });

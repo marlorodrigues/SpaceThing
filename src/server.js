@@ -14,10 +14,10 @@ console.log(`NODE_ENV: ${process.env.NODE_ENV}`)
     const helper = require('./utilities/miscellaneous');
     const numCPUs = require('os').cpus().length + 1;
     const pm2 = require('pm2');
-    const env = helper.get_environtment()
+    const env = helper.get_environment()
 //#endregion
 
-//#region Functions Useds
+//#region Functions Used
 
     const production_server = () => {
         const options = {
@@ -88,7 +88,7 @@ console.log(`NODE_ENV: ${process.env.NODE_ENV}`)
     }
 //#endregion
 
-//#region Gracefull Shutdown
+//#region Gracefully Shutdown
     process.on('uncaughtException', (error, origin = "unused") => {
         logger.error(`${currentDate()} - Uncaught Exception`)
         logger.error(`***********************************`)

@@ -5,8 +5,10 @@ require('dotenv').config({
 const mongoose = require('mongoose');
 const logger = require('../../services/logger');
 
-// mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_URL}/${process.env.DB_USED}?retryWrites=true&w=majority`, {
-mongoose.connect("mongodb://admin:atma*1000@127.0.0.1:27017/admin?retryWrites=true&w=majority", {
+const { get_environment } = require('../../utilities/miscellaneous');
+const environment = get_environment();
+
+mongoose.connect(`mongodb+srv://${environment.NOSQL_DB_USER}:${environment.NOSQL_DB_PASSWORD}@${environment.NOSQL_DB_URL}/?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     connectTimeoutMS: 15000,

@@ -5,15 +5,11 @@ const salesSchema = new _mongoose.Schema({
         type: String,
         require: true
     },
-    origin: { //Origem, dinheiro, cartão, banco, etc
-        type: String,
-        require: true
-    },
     value: { //Valor
         type: Number,
         require: true
     },
-    observations: { //Observações
+    description: { //Observações
         type: String,
         require: false
     },
@@ -21,13 +17,18 @@ const salesSchema = new _mongoose.Schema({
         type: String,
         require: true
     },
-    received: { //Recebido em dinheiro, cartão, etc
+    origin: { //dinheiro, cartão, boleto, etc
+        type: String,
+        require: true
+    },
+    received_on: { //Onde o dinheiro foi recevido
         type: String,
         require: true
     },
     quota: { //Parcelado, à vista, etc
         type: String,
-        require: false
+        require: false,
+        default: "1x"
     },
     prediction_at: { //Previsão de pagamento
         type: Date,

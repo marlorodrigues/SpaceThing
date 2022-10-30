@@ -12,7 +12,7 @@ module.exports = {
     },
 
     // Function to get all environment variables, with not defined, get default values
-    get_environtment() {
+    get_environment() {
         let env = {}
 
         env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -34,7 +34,7 @@ module.exports = {
 
         env.NOSQL_DB_URL = process.env.NOSQL_DB_URL || ''
         env.NOSQL_DB_USER = process.env.NOSQL_DB_USER || ''
-        env.NOSQL_DB_PASS = process.env.NOSQL_DB_PASS || ''
+        env.NOSQL_DB_PASSWORD = process.env.NOSQL_DB_PASSWORD || ''
         env.NOSQL_DB_NAME = process.env.NOSQL_DB_NAME || ''
         env.NOSQL_DB_PORT = process.env.NOSQL_DB_PORT || ''
         env.NOSQL_DB_DIALECT = process.env.NOSQL_DB_DIALECT || 'mongodb'
