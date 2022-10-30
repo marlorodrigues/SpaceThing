@@ -14,9 +14,9 @@ module.exports = {
         return new Date()
     },
 
-    add_day(days_to_add) {
-        const tmp = new Date().setDate(new Date().getDate() + days_to_add);
-        return new Date(tmp);
-    }
+        add_day(days_to_add) {
+            const tmp = new Date().setDate(new Date().getDate() + days_to_add);
+            return new Date(tmp);
+        }
         
 }
