@@ -1,6 +1,6 @@
 const _mongoose = require('mongoose');
 
-const salesSchema = new _mongoose.Schema({
+const balanceSchema = new _mongoose.Schema({
     type: { //Entrada ou Saída
         type: String,
         require: true
@@ -17,33 +17,34 @@ const salesSchema = new _mongoose.Schema({
         type: String,
         require: true
     },
-    origin: { //dinheiro, cartão, boleto, etc
+    origin: { //dinheiro, cartão, boleto, etc (De onde saiu o dinheiro)
         type: String,
         require: true
     },
-    received_on: { //Onde o dinheiro foi recevido
+    received_on: { //Onde o dinheiro foi recebido (SE VENDA)
         type: String,
-        require: true
+        require: false
     },
     quota: { //Parcelado, à vista, etc
         type: String,
         require: false,
-        default: "1x"
+        default: "1"
     },
     prediction_at: { //Previsão de pagamento
         type: Date,
-        require: false
+        require: true,
+        default: Date.now
     },
-    create_at: { //Data de criação
+    created_at: { //Data de criação
         type: Date,
         default: Date.now
     },
-    update_at: { //Data de atualização
+    updated_at: { //Data de atualização
         type: Date,
         default: Date.now
     },
 })
 
-const sales = _mongoose.model('sales', salesSchema);
+const balance = _mongoose.model('balance', balanceSchema);
 
-module.exports = sales;
+module.exports = balance;

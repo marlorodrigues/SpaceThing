@@ -1,30 +1,13 @@
-const Sales = require('./sales.data');
+const Sales = require('./balance.data');
 const Account = require('../account/account.data');
 
 const { checkers, date, misc } = require('../../utilities/index');
 const logger = require('../../services/logger');
 
-const credit_card = 30
-const duplicate = 30
-const debit_card = 3
+/*
+    Where duplicates will be ?
 
-const adjustments = (body) => {
-    if(body.origin == 'credit_card')
-        body.prediction_at = date.add_day(credit_card)
-
-    if(body.origin == 'debit_card')
-        body.prediction_at = date.add_day(debit_card)
-
-    if(body.origin == 'duplicate')
-        body.prediction_at = date.add_day(duplicate)
-
-    if(body.origin == 'cash')
-        body.prediction_at = date.today()
-
-    console.log('predict to received at', body.prediction_at);
-
-    return body;
-}
+*/
 
 module.exports = {
     create: async (req, res, next) => {
@@ -33,19 +16,20 @@ module.exports = {
         var old_value = undefined
 
         try {
+            console.log('Received', req.body);
             if (!checkers.check_params(req.body))
                 return res.status(400).json({ message: 'Missing params' });
 
-            const sale = await Sales.create(adjustments(req.body));
+            const sale = await Sales.create(req.body);
 
             if(sale){
                 _id = sale.id;
-
-                const account = await Account.find({ type: sale.received_on });
+ 
+                const account = await Account.find({ type: sale.origin });
 
                 if(!account || account.length == 0){
-                    res.status(404).json({ message: 'Method for receive not found' });
-                    throw new Error('Method for receive not found')
+                    res.status(400).json({ message: 'Method for receive not found' });
+                    throw new Error('Method for receive not found');
                 }
 
                 _account_id = account[0]._id;
@@ -96,7 +80,7 @@ module.exports = {
         }
     },
 
-    find_futures_pay: async (req, res, next) => {
+    find_futures_sales: async (req, res, next) => {
         try {
             if (!checkers.check_params(req.query))
                 return res.status(400).send({ message: 'Missing params' });
@@ -104,7 +88,8 @@ module.exports = {
             const sales = await Sales.find({
                 prediction_at: {
                     $gt: date.add_day(1)
-                }
+                },
+                type: 'entry'
             });
 
             return res.status(200).send({ sales });
@@ -120,14 +105,18 @@ module.exports = {
             if (!checkers.check_params(req.query))
                 return res.status(400).send({ message: 'Missing params' });
 
+            const filter = date.init_and_end_today()
             const result = await Sales.find({
-                created_at: {
-                    $gt: date.today()
+                prediction_at: {
+                    $gte: filter.init,
+                    $lte: filter.end
                 },
                 type: 'entry'
             });
 
             var total_sale = 0.0;
+            var total_future = 0.0;
+            var total_current = 0.0;
             var received_values = [];
 			var received_dates = [];
 			var future_values = [];
@@ -136,11 +125,13 @@ module.exports = {
             result.map(sale => {
                 if(sale.prediction_at > sale.create_at){
 					future_values.push(sale.value);
-					future_dates.push((sale.create_at || sale.created_at));
+					future_dates.push((sale.prediction_at));
+                    total_future += sale.value;
 				}
 				else {			
 					received_values.push(sale.value);
-					received_dates.push((sale.create_at || sale.created_at));
+					received_dates.push(sale.created_at);
+                    total_current += sale.value;
 				}
 
 				total_sale += sale.value;
@@ -149,10 +140,69 @@ module.exports = {
             return res.status(200).send({ 
                 amount: total_sale,
                 future: {
+                    amount: total_future,
                     values: future_values,
                     dates: future_dates
                 },
                 current: {
+                    amount: total_current,
+                    values: received_values,
+                    dates: received_dates 
+                }
+            });
+        } catch (error) {
+            logger.error(`${date.currentDate()} -  ${error.message} - ${error.stack}`);
+            req.locals.error = error;
+            return next();
+        }
+    },
+
+    find_current_expenses:async (req, res, next) => {
+        try {
+            if (!checkers.check_params(req.query))
+                return res.status(400).send({ message: 'Missing params' });
+
+            const filter = date.init_and_end_today()
+            const result = await Sales.find({
+                prediction_at: {
+                    $gte: filter.init,
+                    $lte: filter.end
+                },
+                type: 'outflow'
+            });
+
+            var total_expense = 0.0;
+            var total_future = 0.0;
+            var total_current = 0.0;
+            var received_values = [];
+			var received_dates = [];
+			var future_values = [];
+			var future_dates = [];
+
+            result.map(expense => {
+                if(expense.prediction_at > expense.create_at){
+					future_values.push(expense.value);
+					future_dates.push((expense.prediction_at));
+                    total_future += expense.value;
+				}
+				else {			
+					received_values.push(expense.value);
+					received_dates.push(expense.created_at);
+                    total_current += expense.value;
+				}
+
+				total_expense += expense.value;
+            })
+
+            return res.status(200).send({ 
+                amount: total_expense,
+                future: {
+                    amount: total_future,
+                    values: future_values,
+                    dates: future_dates
+                },
+                current: {
+                    amount: total_current,
                     values: received_values,
                     dates: received_dates 
                 }
