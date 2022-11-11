@@ -27,8 +27,8 @@ console.log(`NODE_ENV: ${process.env.NODE_ENV}`)
         
         const httpsServer = https.createServer(options, app)
         
-        httpsServer.listen(env.PORT || 3000, () => {
-            logger.info(`${currentDate()} - Server Running on port ${env.PORT || 3000} over HTTPS || Worker Id: ${cluster.worker.id}`)
+        httpsServer.listen(env.PORT || 3501, () => {
+            logger.info(`${currentDate()} - Server Running on port ${env.PORT || 3501} over HTTPS || Worker Id: ${cluster.worker.id}`)
         });
     }
 

@@ -9,7 +9,7 @@ const salesController = require('./balance.controllers');
 const auth = require('../../middlewares/auth');
 const unexpected = require('../../middlewares/errors');
 
-router.post('/', auth.verify_token, salesController.create, unexpected.unexpectedException);
+router.post('/sales', auth.verify_token, salesController.create, unexpected.unexpectedException);
 
 router.get('/sales/today', auth.verify_token, salesController.find_current_sales, unexpected.unexpectedException);
 router.get('/expenses/today', auth.verify_token, salesController.find_current_expenses, unexpected.unexpectedException);

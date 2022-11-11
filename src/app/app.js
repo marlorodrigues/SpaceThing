@@ -24,20 +24,23 @@ class AppController {
 
     middlewares() {
         this.express.set('view cache', true);
+        this.express.set('etag', 'strong');
+
         this.express.use(compression());
         this.express.use(express.json())
         this.express.use(express.Router({ caseSensitive: true }));
         this.express.use(express.urlencoded({ extended: true }));
         this.express.use(express.json());
         this.express.use(bodyParser.json());
-        // this.express.use(cors({
-        //     origin: '*',
-        //     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-        //     allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'Content-Encoding', "Accept-Encoding", 'Cache-Control', 'Access-Control-Allow-Origin'],
-        //     preflightContinue: true,
-        //     optionsSuccessStatus: 204,
-        //     contentType: ['application/json', 'multipart/form-data', 'application/x-www-form-urlencoded']
-        // }));
+        this.express.use(cors({
+            origin: '*',
+            encoded: true,
+            methods: ['GET', 'POST', 'PUT', 'DELETE'],
+            allowedHeaders: ['X-Auth-Token', 'Content-Type', 'Authorization', 'Accept', 'Origin', 'Content-Encoding', "Accept-Encoding", 'Cache-Control'],
+            preflightContinue: true,
+            optionsSuccessStatus: 204,
+            contentType: ['application/json', 'multipart/form-data', 'application/x-www-form-urlencoded']
+        }));
     }
 
     routes() {

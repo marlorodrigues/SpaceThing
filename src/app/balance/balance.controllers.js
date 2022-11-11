@@ -22,6 +22,8 @@ module.exports = {
 
             const sale = await Sales.create(req.body);
 
+            console.log(sale)
+
             if(sale){
                 _id = sale.id;
  
@@ -122,7 +124,7 @@ module.exports = {
 			var future_values = [];
 			var future_dates = [];
 
-            result.map(sale => {
+            result.map(async sale => {
                 if(sale.prediction_at > sale.create_at){
 					future_values.push(sale.value);
 					future_dates.push((sale.prediction_at));
